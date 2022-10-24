@@ -1,5 +1,5 @@
-#ifndef _CHECK_H
-#define _CHECK_H
+#ifndef _INC_CHECK_H
+#define _INC_CHECK_H
 
 #include "stdbool.h"
 
@@ -8,7 +8,7 @@
 #define MAX_ORDER  99999
 #define MIN_ORDER -99999
 
-#define NO_ERRS                 0
+#define NO_ERRS              0
 #define ERROR_COUNT_E       -1
 #define ERROR_COUNT_POINTS  -2
 #define ERROR_COUNT_SIGNS   -3

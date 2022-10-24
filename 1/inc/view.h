@@ -1,5 +1,5 @@
-#ifndef _VIEW_H
-#define _VIEW_H
+#ifndef _INC_VIEW_H
+#define _INC_VIEW_H
 
 #include "stdlib.h"
 
