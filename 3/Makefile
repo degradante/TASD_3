@@ -1,20 +1,18 @@
+CDIR = ./src
+HDIR = ./inc
+ODIR = ./out
+
 CC = gcc
-
-CFLAGS = -std=c99 -Wall -Werror -Wextra -Wpedantic -Wfloat-equal
-
-C_DIR = ./src
-H_DIR = ./inc
-O_DIR = ./out
-HEADERS = alloc.h check_time.h init.h io.h
+CFLAGS = -I$(HDIR) -std=c99 -Wall -Werror -Wextra -Wpedantic -Wfloat-equal
 
 build: app.exe
-app.exe: $(O_DIR)/main.o $(O_DIR)/io.o  $(O_DIR)/operations.o $(O_DIR)/alloc.o $(O_DIR)/check_time.o
+app.exe: $(ODIR)/main.o $(ODIR)/io.o  $(ODIR)/operations.o $(ODIR)/alloc.o $(ODIR)/check_time.o
 	$(CC) $^ -o $@
 
-$(O_DIR)/%.o: $(C_DIR)/%.c
+$(ODIR)/%.o: $(CDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
-#-I$(H_DIR) $(HEADERS)
 
 .PHONY: build clean
+
 clean:
-	rm -f $(O_DIR)/*.o *.exe
+	rm -f $(ODIR)/*.o *.exe

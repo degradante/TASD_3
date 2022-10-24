@@ -1,6 +1,6 @@
-#include "../inc/operations.h"
+#include "operations.h"
 #include "../inc/io.h"
-#include "../inc/alloc.h"
+#include "alloc.h"
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>

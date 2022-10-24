@@ -1,7 +1,7 @@
 
 #include <stdlib.h>
 #include "../inc/io.h"
-#include "../inc/alloc.h"
+#include "alloc.h"
 
 int input_matrix(matrix_t *matrix)
 {

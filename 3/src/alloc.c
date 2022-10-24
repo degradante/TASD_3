@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "../inc/alloc.h"
+#include "alloc.h"
 #include "../inc/io.h"
 
 int alloc_matrix(matrix_t *matrix)

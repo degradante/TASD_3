@@ -1,7 +1,7 @@
 #include "../inc/io.h"
-#include "../inc/operations.h"
-#include "../inc/alloc.h"
-#include "../inc/check_time.h"
+#include "operations.h"
+#include "alloc.h"
+#include "check_time.h"
 #include <string.h>
 /*
 Вариант 3 (14 % 6 + 1)
