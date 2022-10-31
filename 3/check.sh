@@ -14,9 +14,10 @@ for file_m in $list; do
     number=$(echo "$file_m" | grep -o "[0-9]*")
     file_v=$(find ./matrix_data/standart/ -type f -name ""$number"_v.txt")
 
-    args="standart f $file_m $file_v"
+    args="file $file_m $file_v"
+    echo $args
     #valgrind
-    ./app.exe $args
+    ./app.exe "$args"
     rc=$?
 
     if [ $rc -eq 0 ]; then

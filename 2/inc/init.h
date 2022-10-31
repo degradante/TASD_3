@@ -30,6 +30,14 @@ typedef struct
 } book_t;
 
 
+typedef union
+{
+    tech_book_t tech;
+    fiction_book_t fiction;
+    kid_book_t kid;
+} book_kind_t;
+
+
 void process(char choise, FILE *f);
 void add_field(FILE *f);
 void delete_field(FILE *f);

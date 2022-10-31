@@ -1,4 +1,4 @@
-#include "../inc/print.h"
+#include "print.h"
 
 void print_user_guide(void)
 {

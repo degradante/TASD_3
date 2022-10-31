@@ -1,7 +1,6 @@
 #include "../inc/io.h"
-#include "operations.h"
-#include "alloc.h"
-#include "check_time.h"
+#include "sparse.h"
+#include "profile.h"
 #include <string.h>
 /*
 Вариант 3 (14 % 6 + 1)
@@ -24,69 +23,69 @@ int main(int argc, char **argv)
     int err_code = NO_ERRS;
 
     matrix_t matrix = {.n = 0, .m = 0, .data = NULL};
-    vector_t vector = {.n = 0, .data = NULL};
+    matrix_t vector = {.n = 0, .m = 0, .data = NULL};
     matrix_t result = {.n = 0, .m = 0, .data = NULL};
     
-    sparse_matrix_t m_sparse = {.n = 0, .m = 0, .count = 0, .ind_cols = NULL, .data = NULL, .components = NULL};
-    sparse_vector_t v_sparse = {.n = 0, .count = 0, .ind_cols = NULL, .data = NULL};
-    sparse_matrix_t res_sparse = {.n = 0, .m = 0, .count = 0, .ind_cols = NULL, .data = NULL, .components = NULL};
+    sparse_t m_sparse = {.n = 0, .m = 0, .count = 0, .A = NULL, .JA = NULL, .IA = NULL};
+    sparse_t v_sparse = {.n = 0, .m = 0, .count = 0, .A = NULL, .JA = NULL, .IA = NULL};
+    sparse_t res_sparse = {.n = 0, .m = 0, .count = 0, .A = NULL, .JA = NULL, .IA = NULL};
 
     if (argc >= 4 && !strcmp(argv[1], "file"))
     {
         if (!(err_code = read_file_matrix(&matrix, argv[2])))
-            err_code = read_file_vector(&vector, argv[3]);
+            err_code = read_file_matrix(&vector, argv[3]);
     }
-    else if (argc >= 4 && !strcmp(argv[1], "random"))
+    else if (argc >= 7 && !strcmp(argv[1], "random"))
     {
-        if (!(err_code = random_matrix(&matrix, argv[2], argv[3])))
-            err_code = random_vector(&vector, argv[2], argv[3]);
+        if (!(err_code = random_matrix(&matrix, argv[2], argv[3], argv[6])))
+            err_code = random_matrix(&vector, argv[4], argv[5], argv[6]);
     }
     else if (argc >= 2 && !strcmp(argv[1], "standart"))
     {
         if (!(err_code = input_matrix(&matrix)))
-            err_code = input_vector(&vector);
+            err_code = input_matrix(&vector);
     }
     else if (argc >= 2 && !strcmp(argv[1], "sparse"))
     {
-        if (!(err_code = input_m_sparse(&m_sparse)))
-            err_code = input_v_sparse(&v_sparse);
+        if (!(err_code = input_sparse(&m_sparse)))
+            err_code = input_sparse(&v_sparse);
     }
     else
         err_code = ERR_ARG;
     
     if (!err_code && matrix.data)
         if (!(err_code = parse_matrix(&matrix, &m_sparse)))
-            err_code = parse_vector(&vector, &v_sparse);
+            err_code = parse_matrix(&vector, &v_sparse);
 
     if (!err_code)
     {
         mark_time(&matrix, &vector, &result, &m_sparse, &v_sparse, &res_sparse);
-
+        //mul_matrix(&matrix, &vector, &result);
     
-        puts("=============================================");
+        puts("M============================================");
         output_matrix(&matrix);
-        puts("=============================================");
-        output_vector(&vector);
-        puts("=============================================");
-        output_m_sparse(&m_sparse);
-        puts("=============================================");
-        output_v_sparse(&v_sparse);
-        puts("=============================================");
+        puts("V============================================");
+        output_matrix(&vector);
+        puts("R============================================");
+        output_sparse(&m_sparse);
+        puts("M============================================");
+        output_sparse(&v_sparse);
+        puts("V============================================");
         output_matrix(&result);
-        puts("=============================================");
-        output_m_sparse(&res_sparse);
+        puts("R============================================");
+        output_sparse(&res_sparse);
         puts("=============================================");
     }
     else
         print_error(err_code);
 
     free_matrix(&matrix);
-    free_vector(&vector);
+    free_matrix(&vector);
     free_matrix(&result);
 
-    free_m_sparse(&m_sparse);
-    free_v_sparse(&v_sparse);
-    free_m_sparse(&res_sparse);
+    free_sparse(&m_sparse);
+    free_sparse(&v_sparse);
+    free_sparse(&res_sparse);
 
     return err_code;
 }
