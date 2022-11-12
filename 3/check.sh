@@ -10,12 +10,11 @@ fileFlag='2'
 list=$(find $dir -type f -name "*_m.txt")
     
 
-for file_m in $list; do
-    number=$(echo "$file_m" | grep -o "[0-9]*")
-    file_v=$(find ./matrix_data/standart/ -type f -name ""$number"_v.txt")
+for matrix in $list; do
+    number=$(echo "$matrix" | grep -o "[0-9]*")
+    vector=$(find ./matrix_data/standart/ -type f -name ""$number"_v.txt")
 
-    args="file $file_m $file_v"
-    echo $args
+    args="file $matrix $vector"
     #valgrind
     ./app.exe "$args"
     rc=$?

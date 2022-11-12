@@ -1,10 +1,8 @@
-#ifndef _INC_PRINT_H
-#define _INC_PRINT_H
-
-#include <stdio.h>
+#ifndef __PRINT_H__
+#define __PRINT_H__
 
 #define NO_ERRS     0
-#define ERR_NO_ARG -1
+#define ERR_ARG -1
 #define ERR_FILE_NAME -2
 
 void print_user_guide(void);

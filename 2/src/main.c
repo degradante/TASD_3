@@ -1,5 +1,5 @@
 #include "print.h"
-#include "../inc/init.h"
+#include "init.h"
 
 int main(int argc, char **argv)
 {
@@ -9,7 +9,7 @@ int main(int argc, char **argv)
     FILE *f;
 
     if (argc < 2)
-        err_code = ERR_NO_ARG;
+        err_code = ERR_ARG;
     else if (!(f = fopen(argv[1], "r+")))
         err_code = ERR_FILE_NAME;
     else 

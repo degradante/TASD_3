@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "print.h"
 
 void print_user_guide(void)
@@ -32,8 +33,8 @@ void print_error(int error_code)
 {
     switch (error_code)
     {
-        case ERR_NO_ARG:
-            puts("\tError: no argument");
+        case ERR_ARG:
+            puts("\tError: usage");
             break;
         case ERR_FILE_NAME:
             puts("\tError: invalid file name");

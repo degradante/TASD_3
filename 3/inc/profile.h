@@ -3,7 +3,7 @@
 
 #include "matrix.h"
 #include "sparse.h"
-#include "../inc/io.h"
+#include "io.h"
 
 size_t milliseconds_now(void);
 int mark_time(matrix_t *matrix, matrix_t *vector, matrix_t *result, sparse_t *m_sparse, sparse_t *v_sparse, sparse_t *res_sparse);

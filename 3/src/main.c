@@ -1,4 +1,4 @@
-#include "../inc/io.h"
+#include "io.h"
 #include "sparse.h"
 #include "profile.h"
 #include <string.h>

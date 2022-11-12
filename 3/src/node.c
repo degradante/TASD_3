@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include "cons.h"
+#include "node.h"
 #include "../inc/io.h"
 
-int cons_get(cons_t *self, size_t ind)
+int node_get(node_t *self, size_t ind)
 {
     for (size_t i = 0; i < ind; ++i)
         self = self->next;
@@ -11,27 +11,27 @@ int cons_get(cons_t *self, size_t ind)
 }
 
 
-cons_t *first_alloc_cons(void)
+node_t *first_alloc_node(void)
 {
-    cons_t *self = (cons_t*)calloc(1, sizeof(cons_t));
+    node_t *self = (node_t*)calloc(1, sizeof(node_t));
     self->next = NULL;
 
     return self;
 }
 
 
-void alloc_cons(cons_t *self)
+void alloc_node(node_t *self)
 {
     while (self->next)
         self = self->next;
-    cons_t *now = (cons_t*)calloc(1, sizeof(cons_t));
+    node_t *now = (node_t*)calloc(1, sizeof(node_t));
     self->next = now;
 }
 
 
-void free_cons(cons_t *self)
+void free_node(node_t *self)
 {
-    cons_t *prev = NULL;
+    node_t *prev = NULL;
     while (self)
     {
         prev = self;
@@ -42,9 +42,9 @@ void free_cons(cons_t *self)
 }
 
 
-void print_cons(cons_t *self)
+void print_node(node_t *self)
 {
-    cons_t *temp = self;
+    node_t *temp = self;
     while (temp)
     {
         printf("%d ", temp->value);

@@ -1,4 +1,4 @@
-#include "../inc/init.h"
+#include "init.h"
 
 void process(char choise, FILE *f)
 {
@@ -19,13 +19,21 @@ void process(char choise, FILE *f)
 void add_field(FILE *f)
 {
     book_t book;
-    printf("Input lastname, izdatelstvo, pages:\n");
+    printf("Input lastname, publisher, pages:\n");
     scanf("%s", book.last_name);
-    scanf("%s", book.izdatelstvo);
+    scanf("%s", book.title);
+    scanf("%s", book.publisher);
     scanf("%lu", &book.pages);
 
+    scanf("%hd", &book.type);
+    if (book.type == 1)
+    {
+        ;
+    }
+
     fwrite(book.last_name, sizeof(book.last_name), 1, f);
-    fwrite(book.izdatelstvo, sizeof(book.izdatelstvo), 1, f);
+    fwrite(book.title, sizeof(book.title), 1, f);
+    fwrite(book.publisher, sizeof(book.publisher), 1, f);
     fwrite(&book.pages, sizeof(book.pages), 1, f);
 }
 
