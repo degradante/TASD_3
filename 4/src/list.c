@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "list.h"
-#include "../inc/io.h"
+#include "io.h"
 
-list_t *first_alloc_list(void)
+list_t *list_new(void)
 {
     list_t *self = (list_t*)calloc(1, sizeof(list_t));
     self->top = NULL;
@@ -11,7 +11,7 @@ list_t *first_alloc_list(void)
 }
 
 
-void list_add(list_t *self, data_t character)
+void list_push(list_t *self, data_t character)
 {
     // if (self->top)
     cons_t *top = self->top; 
@@ -34,15 +34,29 @@ data_t list_pop(list_t *self)
 }
 
 
-void list_free(list_t *self)
+bool list_empty(list_t *self)
 {
-    cons_t *next = self->top->next;
-    free(self->top);
-    self->top = next;
+    if (!self->top)
+        return true;
+        
+    return false;
 }
 
 
-void print_list(list_t *self)
+void list_free(list_t *self)
+{
+    while (self->top)
+    {
+        cons_t *next = self->top->next;
+        free(self->top);
+        self->top = next;
+    }
+    free(self);
+    self = NULL;
+}
+
+
+void list_print(list_t *self)
 {
     cons_t *cons = self->top;
     while (cons)

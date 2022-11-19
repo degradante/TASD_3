@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-stack_t stack_new(size_t size)
+stack_t stack_alloc(size_t size)
 {
 	stack_t self = { 0 };
 
@@ -22,15 +22,17 @@ size_t stack_size(stack_t *self)
 
 void stack_delete(stack_t *self)
 {
-    if (self)
+    if (self->begin)
     {
-        free(self);
-        self = NULL;
+        self->end = NULL;
+        self->pnow = NULL;
+        free(self->begin);
+        self->begin = NULL;
     }
 }
 
 
-int stack_empty(stack_t *self)
+bool stack_empty(stack_t *self)
 {
 	return self->pnow < self->begin;
 }

@@ -2,6 +2,7 @@
 #define _INC_STACK_H
 
 #include <stddef.h>
+#include <stdbool.h>
 
 #define data_t char
 
@@ -15,11 +16,11 @@ typedef struct
 
 size_t stack_size(stack_t *self);
 
-stack_t alloc_stack(size_t size);
+stack_t stack_alloc(size_t size);
 
 void stack_delete(stack_t *self);
 
-int stack_empty(stack_t *self);
+bool stack_empty(stack_t *self);
 
 void stack_print(stack_t *self);
 

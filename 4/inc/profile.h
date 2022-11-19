@@ -3,7 +3,7 @@
 
 #include "stack.h"
 #include "list.h"
-#include "../inc/io.h"
+#include "io.h"
 
 size_t milliseconds_now(void);
 
