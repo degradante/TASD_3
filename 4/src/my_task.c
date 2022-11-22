@@ -3,20 +3,52 @@
 #include "list.h"
 #include "stack.h"
 
-/*
+/* TODO
+ size_t i в цикл
+ 
+*/
+
 int brackets_check_array(const char *str)
 {
+    int err_code = NO_ERRS;
+
     size_t len = strlen(str);
-    stack_t stack = alloc_stack(len + 1);
+    stack_t *stack = stack_new(len + 1);
 
     for (size_t i = 0; i < len; ++i)
     {
-        stack.pnow++;
-        stack.pnow = 
+        switch (str[i])
+        {
+            case '{':
+                stack_push(stack, '}');
+                break;
+            case '(':
+                stack_push(stack, ')');
+                break;
+            case '[':
+                stack_push(stack, ']');
+                break;
+            case '}':
+            case ')':
+            case ']':
+                if (stack_empty(stack) || stack_pop(stack) != str[i])
+                    err_code = ERR_BRACKETS; 
+                break;
+            default:
+                break;
+        }   
     }
 
-    return NO_ERRS;
-} */
+    if (!stack_empty(stack))
+        err_code = ERR_BRACKETS;
+
+    !err_code ? puts("Correct") : puts("Invalid");
+
+    // stack_print(stack);
+    stack_delete(stack);
+
+    return err_code;
+}
 
 
 
@@ -24,11 +56,9 @@ int brackets_check_list(data_t *str)
 {
     int err_code = NO_ERRS;
 
-    size_t len = strlen(str);
     list_t *list = list_new(); 
 
-    size_t i = 0;
-    for (i = 0; i < len && !err_code; ++i)
+    for (size_t i = 0; str[i] && !err_code; ++i)
     {
         switch (str[i])
         {
@@ -44,6 +74,7 @@ int brackets_check_list(data_t *str)
             case '}':
             case ')':
             case ']':
+
                 if (list_empty(list) || list_pop(list) != str[i])
                     err_code = ERR_BRACKETS; 
                 break;
@@ -58,7 +89,7 @@ int brackets_check_list(data_t *str)
     !err_code ? puts("Correct") : puts("Invalid");
     //print_list(list);
 
-    list_free(list);
+    list_delete(list);
     
     return err_code;
 }

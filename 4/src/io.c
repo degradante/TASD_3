@@ -1,5 +1,15 @@
 #include "../inc/io.h"
 
+void print_user_guide(void)
+{
+    printf(" ══════════════════════════════════════════════════════════════════════════\n"
+        "\t Программа для работы со стеком "
+        "\n"
+        "\n"
+        "     ");
+}
+
+
 void print_error(int error_code)
 {
     printf(" ══════════════════════════════════════════════════════════════════════════\n"
@@ -8,10 +18,7 @@ void print_error(int error_code)
         "     ");
     switch(error_code)
     {
-         case ERR_ARG:
-            puts("Error: usage app.exe type i/f/r\n");
-            break;
-        case ERR_N_M:
+        case ERR_BRACKETS:
             puts("Error: invalid matrix size\n");
             break;
         case ERR_DIM:

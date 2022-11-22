@@ -128,8 +128,8 @@ void free_matrix(matrix_t *matrix)
                 free(matrix->data[i]);
 
         free(matrix->data);
+        matrix->data = NULL;
     }
-    matrix->data = NULL;
     matrix->n = matrix->m = 0;
 }
 

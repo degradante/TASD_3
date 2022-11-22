@@ -11,13 +11,13 @@ list_t *list_new(void)
 }
 
 
-void list_push(list_t *self, data_t character)
+void list_push(list_t *self, data_t pushing_char)
 {
     // if (self->top)
-    cons_t *top = self->top; 
-    cons_t *new = (cons_t*)calloc(1, sizeof(cons_t));
-    new->value = character;
-    self->top = new;
+    node_t *top = self->top; 
+    node_t *new_node = (node_t*)calloc(1, sizeof(node_t));
+    new_node->value = pushing_char;
+    self->top = new_node;
     self->top->next = top;
 }
 
@@ -26,7 +26,7 @@ data_t list_pop(list_t *self)
 {
     data_t val = self->top->value;
 
-    cons_t *next = self->top->next;
+    node_t *next = self->top->next;
     free(self->top);
     self->top = next;
 
@@ -43,11 +43,11 @@ bool list_empty(list_t *self)
 }
 
 
-void list_free(list_t *self)
+void list_delete(list_t *self)
 {
     while (self->top)
     {
-        cons_t *next = self->top->next;
+        node_t *next = self->top->next;
         free(self->top);
         self->top = next;
     }
@@ -58,11 +58,11 @@ void list_free(list_t *self)
 
 void list_print(list_t *self)
 {
-    cons_t *cons = self->top;
-    while (cons)
+    node_t *node = self->top;
+    while (node)
     {
-        printf("%c\n", cons->value);
-        cons = cons->next;
+        printf("%c\n", node->value);
+        node = node->next;
     }
 }
 

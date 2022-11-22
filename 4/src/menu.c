@@ -23,6 +23,7 @@ void main_loop(void)
         case '1':
             fgets(str, 250 + 1, stdin);
             brackets_check_list(str);
+            brackets_check_array(str);
             break;
         default:
             puts("Err\n");
