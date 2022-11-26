@@ -59,9 +59,10 @@ void list_delete(list_t *self)
 void list_print(list_t *self)
 {
     node_t *node = self->top;
+    printf("List: ");
     while (node)
     {
-        printf("%c\n", node->value);
+        printf("%c ", node->value);
         node = node->next;
     }
 }

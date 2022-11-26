@@ -2,6 +2,7 @@
 #define _INC_IO_H
 
 #include <stdio.h>
+#include "stack.h"
 
 #define NO_ERRS          0
 #define ERR_ARG         -1
@@ -12,7 +13,10 @@
 #define ERR_ALLOC       -6
 #define ERR_DIM         -7
 
+bool read_elem(data_t *elem);
+void separator(void);
 void print_user_guide(void);
+void print_commands(void);
 void print_menu(void);
 void print_error(int error_code);
 
