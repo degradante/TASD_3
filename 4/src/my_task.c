@@ -1,14 +1,10 @@
 #include <string.h>
+
 #include "../inc/io.h"
 #include "list.h"
 #include "stack.h"
 
-/* TODO
- size_t i в цикл
- 
-*/
-
-int brackets_check_array(const char *str)
+int brackets_check_stack(const char *str)
 {
     int err_code = NO_ERRS;
 

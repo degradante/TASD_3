@@ -13,7 +13,6 @@ list_t *list_new(void)
 
 void list_push(list_t *self, data_t pushing_char)
 {
-    // if (self->top)
     node_t *top = self->top; 
     node_t *new_node = (node_t*)calloc(1, sizeof(node_t));
     new_node->value = pushing_char;
@@ -59,7 +58,7 @@ void list_delete(list_t *self)
 void list_print(list_t *self)
 {
     node_t *node = self->top;
-    printf("List: ");
+    printf("\nList:\n ");
     while (node)
     {
         printf("%c ", node->value);

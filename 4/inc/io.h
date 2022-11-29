@@ -4,16 +4,18 @@
 #include <stdio.h>
 #include "stack.h"
 
-#define NO_ERRS          0
-#define ERR_ARG         -1
-#define ERR_FILE_NAME   -2
-#define ERR_BRACKETS    -3
-#define ERR_ELEM        -4
-#define ERR_EMPTY       -5
-#define ERR_ALLOC       -6
-#define ERR_DIM         -7
+enum { 
+    NO_ERRS,
+    ERR_ARG,
+    ERR_FILE_NAME,
+    ERR_BRACKETS,
+    ERR_ELEM,
+    ERR_EMPTY,
+    ERR_ALLOC,
+    ERR_DIM,
+};
 
-bool read_elem(data_t *elem);
+bool read_char(data_t *elem);
 void separator(void);
 void print_user_guide(void);
 void print_commands(void);

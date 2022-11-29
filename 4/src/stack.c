@@ -62,13 +62,8 @@ bool stack_empty(stack_t *self)
 
 void stack_print(stack_t *self)
 {
-	if (stack_empty(self))
-		puts("Stack is empty");
-	else
-    {
-        printf("Stack is: ");
-        for (data_t *ch = self->top; ch >= self->begin; ch--)
-            printf("%c ", *ch);
-        printf("\n");
-    }
+    printf("\nStack:\n ");
+    for (data_t *ch = self->top; ch >= self->begin; ch--)
+        printf("%c ", *ch);
+    printf("\n");
 }

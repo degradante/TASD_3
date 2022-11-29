@@ -7,8 +7,6 @@ int main(void)
 
     print_user_guide();
     main_loop();
-
-    //printf("you see\n");
     
     return err_code;
 }

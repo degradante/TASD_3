@@ -1,12 +1,12 @@
 #include "../inc/io.h"
 
-bool read_elem(data_t *elem)
+bool read_char(data_t *elem)
 {
-    int rc;
+    int rc = scanf("%c", elem);
 
-    printf("\nInput elem: ");
-    rc = scanf("%c", elem);
-    getchar();
+    char garbage;
+    while ((garbage = getchar()) != EOF && garbage != '\n')
+            ;
 
     return rc == 1 ? true : false;
 }
@@ -16,10 +16,9 @@ void print_user_guide(void)
 {
     separator();
     printf(
-        "\t Программа для работы со стеком "
-        "\n"
-        "\n"
-        "     ");
+        "%80s\n%80s\n",
+        "Программа для работы со стеком", 
+        "Программа проверяет правильность расстановки скобок");
 }
 
 
@@ -34,7 +33,9 @@ void print_commands(void)
             "\t5. Array pop element\n"
             "\t6. Array print\n"
             "\t7.\n"
-            "\t8. Input string\n");
+            "\t8. Input string\n"
+            "\t9. Profile time\n"
+            "\t0. Exit\n");
 }
 
 
@@ -68,5 +69,8 @@ void print_error(int error_code)
 
 void separator(void)
 {
-    printf("\n ══════════════════════════════════════════════════════════════════════════\n");
+    printf("\n");
+    for (size_t i = 0; i < 80; ++i) 
+        printf("═");
+    printf("\n");
 }
