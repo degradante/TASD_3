@@ -29,4 +29,6 @@ void stack_delete(stack_t *self);
 
 void stack_print(stack_t *self);
 
+size_t stack_memsize(size_t size);
+
 #endif

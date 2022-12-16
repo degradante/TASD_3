@@ -1,27 +1,28 @@
+#include "queue_list.h"
+#include <stdio.h>
 #include <stdlib.h>
-#include "list.h"
-#include "io.h"
 
-list_t *list_new(void)
+
+queue_list_t *queue_list_new()
 {
-    list_t *self = (list_t*)calloc(1, sizeof(list_t));
-    self->top = NULL;
+    queue_list_t *self = calloc(1, sizeof(queue_list_t));
+    self->top = calloc(1, sizeof(node_t));
 
     return self;
 }
 
 
-void list_push(list_t *self, data_t pushing_char)
+void queue_list_add(queue_list_t *self, data_t pushing_value)
 {
     node_t *top = self->top; 
     node_t *new_node = (node_t*)calloc(1, sizeof(node_t));
-    new_node->value = pushing_char;
+    new_node->value = pushing_value;
     self->top = new_node;
     self->top->next = top;
 }
 
 
-data_t list_pop(list_t *self)
+data_t queue_list_pop(queue_list_t *self)
 {
     data_t val = self->top->value;
 
@@ -33,7 +34,7 @@ data_t list_pop(list_t *self)
 }
 
 
-bool list_empty(list_t *self)
+bool queue_list_empty(queue_list_t *self)
 {
     if (!self->top)
         return true;
@@ -42,7 +43,7 @@ bool list_empty(list_t *self)
 }
 
 
-void list_delete(list_t *self)
+void queue_list_delete(queue_list_t *self)
 {
     while (self->top)
     {
@@ -55,10 +56,10 @@ void list_delete(list_t *self)
 }
 
 
-void list_print(list_t *self)
+void queue_list_print(queue_list_t *self)
 {
     node_t *node = self->top;
-    printf("\nList:\n ");
+    printf("\nqueue_list:\n ");
     while (node)
     {
         printf("%c ", node->value);
@@ -67,13 +68,13 @@ void list_print(list_t *self)
 }
 
 
-size_t list_memsize(size_t size)
+size_t queue_list_memsize(size_t size)
 {
-	return sizeof(list_t) + sizeof(node_t) * size;
+	return sizeof(queue_list_t) + sizeof(node_t) * size;
 }
 
 
-size_t nodes_memsize(list_t *self)
+size_t nodes_memsize(queue_list_t *self)
 {
     size_t nodes_count = 0;
 

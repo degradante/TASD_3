@@ -67,3 +67,9 @@ void stack_print(stack_t *self)
         printf("%c ", *ch);
     printf("\n");
 }
+
+
+size_t stack_memsize(size_t size)
+{
+	return sizeof(stack_t) + sizeof(data_t) * size;
+}

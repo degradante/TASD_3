@@ -17,7 +17,7 @@ typedef struct
 } list_t;
 
 
-list_t *list_new(void);
+list_t *list_new();
 
 void list_push(list_t *self, data_t character);
 
@@ -29,5 +29,8 @@ void list_delete(list_t *self);
 
 void list_print(list_t *self);
 
+size_t list_memsize(size_t size);
+
+size_t nodes_memsize(list_t *self);
 
 #endif

@@ -2,7 +2,7 @@
 #define _INC_IO_H
 
 #include <stdio.h>
-#include "stack.h"
+#include "queue_array.h"
 
 enum { 
     NO_ERRS,
@@ -13,7 +13,7 @@ enum {
     ERR_EMPTY,
     ERR_ALLOC,
     ERR_DIM,
-};
+} error_t;
 
 bool read_choise(short *value);
 

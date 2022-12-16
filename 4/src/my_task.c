@@ -38,6 +38,7 @@ int brackets_check_stack(const char *str)
     if (!stack_empty(stack))
         err_code = ERR_BRACKETS;
 
+    printf("Check with stack: ");
     !err_code ? puts("Correct") : puts("Invalid");
 
     // stack_print(stack);
@@ -82,6 +83,7 @@ int brackets_check_list(data_t *str)
     if (!list_empty(list))
         err_code = ERR_BRACKETS;
 
+    printf("Check with list: ");
     !err_code ? puts("Correct") : puts("Invalid");
     //print_list(list);
 
