@@ -2,7 +2,7 @@
 #define _INC_IO_H
 
 #include <stdio.h>
-#include "stack.h"
+#include "stack_array.h"
 
 enum { 
     NO_ERRS,
@@ -24,6 +24,5 @@ void separator();
 void print_user_guide();
 
 void print_error(int error_code);
-
 
 #endif

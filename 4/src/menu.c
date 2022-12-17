@@ -3,10 +3,11 @@
 #include <time.h>
 
 #include "menu.h"
-#include "stack.h"
-#include "list.h"
+#include "stack_array.h"
+#include "stack_list.h"
 #include "io.h"
 #include "my_task.h"
+#include "my_memory.h"
 #include "profile.h"
 
 void main_loop(void)
@@ -14,8 +15,8 @@ void main_loop(void)
     data_t str[250 + 1];
     data_t elem_new;
 
-    list_t *list = list_new();
-    stack_t *stack = stack_new(1024);
+    stack_list_t *stack_list = stack_list_new();
+    stack_array_t *stack_array = stack_array_new(1024);
 
     
     short choise;
@@ -30,59 +31,63 @@ void main_loop(void)
             case BTN_LIST_ADD:
                 printf("Input char: ");
                 if (read_char(&elem_new))
-                    list_push(list, elem_new);
+                    stack_list_push(stack_list, elem_new);
                 else
                     printf("\nInput error\n");
                 break;
 
             case BTN_LIST_POP:
-                if (!list_empty(list))
-                    printf("Popped: %c\n", list_pop(list));
+                if (!stack_list_empty(stack_list))
+                    printf("Popped: %c\n", stack_list_pop(stack_list));
                 else
                     printf("\nList is empty\n");
                 break;
 
             case BTN_LIST_PRINT:
-                if (!list_empty(list))
-                    list_print(list);
+                if (!stack_list_empty(stack_list))
+                    stack_list_print(stack_list);
                 else
                     printf("\nList is empty\n");
                 break;
 
             case BTN_LIST_MEMORY:
-                printf("\nList stack size: %ld bytes\n", sizeof(list) + nodes_memsize(list));
+                printf("\nList stack_array size: %ld bytes\n", sizeof(stack_list) + nodes_memsize(stack_list));
                 break;
 
-            case BTN_STACK_ADD:
+            case BTN_ARRAY_ADD:
                 printf("Input char: ");
                 if (read_char(&elem_new))
-                    stack_push(stack, elem_new);
+                    stack_array_push(stack_array, elem_new);
                 else
                     printf("\nInput error\n");
                 break;
 
-            case BTN_STACK_POP:
-                if (!stack_empty(stack))
-                    printf("Popped: %c\n", stack_pop(stack));
+            case BTN_ARRAY_POP:
+                if (!stack_array_empty(stack_array))
+                    printf("Popped: %c\n", stack_array_pop(stack_array));
                 else
-                    printf("\nStack is empty\n");
+                    printf("\nstack_array is empty\n");
                 break;
 
-            case BTN_STACK_PRINT:
-                if (!stack_empty(stack))
-                    stack_print(stack);
+            case BTN_ARRAY_PRINT:
+                if (!stack_array_empty(stack_array))
+                    stack_array_print(stack_array);
                 else
-                    printf("\nStack is empty\n");
+                    printf("\nstack_array is empty\n");
                 break;
 
-            case BTN_STACK_MEMORY:
-                printf("\nArray task size: %ld bytes\n", stack_memsize(stack_size(stack)));
+            case BTN_ARRAY_MEMORY:
+                printf("\nArray task size: %ld bytes\n", stack_array_memsize(stack_array_size(stack_array)));
                 break;
 
             case BTN_BRACKETS_CHECK:
                 fgets(str, 250 + 1, stdin);
-                brackets_check_stack(str);
-                brackets_check_list(str);
+                brackets_check_stack_array(str);
+                brackets_check_stack_list(str);
+                break;
+
+            case BTN_DELETED_ADRESSES:
+                log_print_deleted_addresses();
                 break;
 
             case BTN_MEMORY_PROFILE:
@@ -101,8 +106,8 @@ void main_loop(void)
         }
     } while (choise != BTN_END);
 
-    list_delete(list);
-    stack_delete(stack);
+    stack_list_delete(stack_list);
+    stack_array_delete(stack_array);
 }
 
 
@@ -120,6 +125,7 @@ void print_menu(void)
             "\t%2d. Array print\n"
             "\t%2d. Array memory\n"
             "\t%2d. Input string\n"
+            "\t%2d. Log deleted adresses\n"
             "\t%2d. Profile memory\n"
             "\t%2d. Profile time\n"
             "\t%2d. Exit\n",
@@ -127,11 +133,12 @@ void print_menu(void)
              BTN_LIST_POP,
              BTN_LIST_PRINT,
              BTN_LIST_MEMORY,
-             BTN_STACK_ADD,
-             BTN_STACK_POP,
-             BTN_STACK_PRINT,
-             BTN_STACK_MEMORY,
+             BTN_ARRAY_ADD,
+             BTN_ARRAY_POP,
+             BTN_ARRAY_PRINT,
+             BTN_ARRAY_MEMORY,
              BTN_BRACKETS_CHECK,
+             BTN_DELETED_ADRESSES,
              BTN_MEMORY_PROFILE,
              BTN_TIME_PROFILE,
              BTN_END

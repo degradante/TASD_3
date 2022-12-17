@@ -1,8 +1,8 @@
-#ifndef _INC_MATRIX_H
-#define _INC_MATRIX_H
+#ifndef _INC_MY_TASK_H
+#define _INC_MY_TASK_H
 
-int brackets_check_stack(const char *str);
+int brackets_check_stack_array(const char *str);
 
-int brackets_check_list(char *str);
+int brackets_check_stack_list(char *str);
 
 #endif

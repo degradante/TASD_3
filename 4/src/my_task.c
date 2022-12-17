@@ -1,33 +1,34 @@
 #include <string.h>
 
 #include "../inc/io.h"
-#include "list.h"
-#include "stack.h"
+#include "stack_list.h"
+#include "stack_array.h"
+#include "my_task.h"
 
-int brackets_check_stack(const char *str)
+int brackets_check_stack_array(const char *str)
 {
     int err_code = NO_ERRS;
 
     size_t len = strlen(str);
-    stack_t *stack = stack_new(len + 1);
+    stack_array_t *stack_array = stack_array_new(len + 1);
 
     for (size_t i = 0; i < len; ++i)
     {
         switch (str[i])
         {
             case '{':
-                stack_push(stack, '}');
+                stack_array_push(stack_array, '}');
                 break;
             case '(':
-                stack_push(stack, ')');
+                stack_array_push(stack_array, ')');
                 break;
             case '[':
-                stack_push(stack, ']');
+                stack_array_push(stack_array, ']');
                 break;
             case '}':
             case ')':
             case ']':
-                if (stack_empty(stack) || stack_pop(stack) != str[i])
+                if (stack_array_empty(stack_array) || stack_array_pop(stack_array) != str[i])
                     err_code = ERR_BRACKETS; 
                 break;
             default:
@@ -35,44 +36,43 @@ int brackets_check_stack(const char *str)
         }   
     }
 
-    if (!stack_empty(stack))
+    if (!stack_array_empty(stack_array))
         err_code = ERR_BRACKETS;
 
-    printf("Check with stack: ");
+    printf("Check with stack_array: ");
     !err_code ? puts("Correct") : puts("Invalid");
 
-    // stack_print(stack);
-    stack_delete(stack);
+    // stack_array_print(stack_array);
+    stack_array_delete(stack_array);
 
     return err_code;
 }
 
 
-
-int brackets_check_list(data_t *str)
+int brackets_check_stack_list(data_t *str)
 {
     int err_code = NO_ERRS;
 
-    list_t *list = list_new(); 
+    stack_list_t *stack_list = stack_list_new(); 
 
     for (size_t i = 0; str[i] && !err_code; ++i)
     {
         switch (str[i])
         {
             case '{':
-                list_push(list, '}');
+                stack_list_push(stack_list, '}');
                 break;
             case '(':
-                list_push(list, ')');
+                stack_list_push(stack_list, ')');
                 break;
             case '[':
-                list_push(list, ']');
+                stack_list_push(stack_list, ']');
                 break;
             case '}':
             case ')':
             case ']':
 
-                if (list_empty(list) || list_pop(list) != str[i])
+                if (stack_list_empty(stack_list) || stack_list_pop(stack_list) != str[i])
                     err_code = ERR_BRACKETS; 
                 break;
             default:
@@ -80,14 +80,14 @@ int brackets_check_list(data_t *str)
         }      
     }
     
-    if (!list_empty(list))
+    if (!stack_list_empty(stack_list))
         err_code = ERR_BRACKETS;
 
-    printf("Check with list: ");
+    printf("Check with stack_list: ");
     !err_code ? puts("Correct") : puts("Invalid");
-    //print_list(list);
+    //print_stack_list(stack_list);
 
-    list_delete(list);
+    stack_list_delete(stack_list);
     
     return err_code;
 }

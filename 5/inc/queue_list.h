@@ -13,7 +13,7 @@ typedef struct node
 
 typedef struct
 {
-    node_t *top;
+    node_t *begin;
 } queue_list_t;
 
 

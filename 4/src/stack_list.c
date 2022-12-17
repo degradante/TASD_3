@@ -1,17 +1,18 @@
 #include <stdlib.h>
-#include "list.h"
+#include "stack_list.h"
 #include "io.h"
+#include "my_memory.h"
 
-list_t *list_new(void)
+stack_list_t *stack_list_new(void)
 {
-    list_t *self = (list_t*)calloc(1, sizeof(list_t));
+    stack_list_t *self = (stack_list_t*)calloc(1, sizeof(stack_list_t));
     self->top = NULL;
 
     return self;
 }
 
 
-void list_push(list_t *self, data_t pushing_char)
+void stack_list_push(stack_list_t *self, data_t pushing_char)
 {
     node_t *top = self->top; 
     node_t *new_node = (node_t*)calloc(1, sizeof(node_t));
@@ -21,9 +22,12 @@ void list_push(list_t *self, data_t pushing_char)
 }
 
 
-data_t list_pop(list_t *self)
+data_t stack_list_pop(stack_list_t *self)
 {
     data_t val = self->top->value;
+
+    if (LOG_DELETED)
+		log_delete(self->top);
 
     node_t *next = self->top->next;
     free(self->top);
@@ -33,7 +37,7 @@ data_t list_pop(list_t *self)
 }
 
 
-bool list_empty(list_t *self)
+bool stack_list_empty(stack_list_t *self)
 {
     if (!self->top)
         return true;
@@ -42,7 +46,7 @@ bool list_empty(list_t *self)
 }
 
 
-void list_delete(list_t *self)
+void stack_list_delete(stack_list_t *self)
 {
     while (self->top)
     {
@@ -55,10 +59,10 @@ void list_delete(list_t *self)
 }
 
 
-void list_print(list_t *self)
+void stack_list_print(stack_list_t *self)
 {
     node_t *node = self->top;
-    printf("\nList:\n ");
+    printf("\nstack_list:\n ");
     while (node)
     {
         printf("%c ", node->value);
@@ -67,13 +71,13 @@ void list_print(list_t *self)
 }
 
 
-size_t list_memsize(size_t size)
+size_t stack_list_memsize(size_t size)
 {
-	return sizeof(list_t) + sizeof(node_t) * size;
+	return sizeof(stack_list_t) + sizeof(node_t) * size;
 }
 
 
-size_t nodes_memsize(list_t *self)
+size_t nodes_memsize(stack_list_t *self)
 {
     size_t nodes_count = 0;
 

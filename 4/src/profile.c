@@ -1,77 +1,78 @@
-#include <sys/time.h>
 #include <time.h>
 #include <stdio.h>
 
 #include "profile.h"
-#include "stack.h"
-#include "list.h"
+#include "stack_array.h"
+#include "stack_list.h"
 #include "my_task.h"
 
 
 void memory_profile()
 {
-	printf("Memory profile:\n");
+	printf("\n%50s\n\n", "array/list stack memory profile");
 	size_t sizes[] = { 1, 2, 3, 10, 100, 1000, 10000 };
 	size_t n_sizes = sizeof(sizes) / sizeof(sizes[0]);
 
-	printf("|%15s|%30s|%30s|\n", "size", "stack", "list");
+	printf("|%13s|%27s|%27s|\n", "size", "array", "list");
 	for (size_t i = 0; i < n_sizes; i++)
-		printf("|%15ld|%30ld|%30ld|\n", sizes[i], stack_memsize(sizes[i]), list_memsize(sizes[i]));
+		printf("|%13ld|%27ld|%27ld|\n", sizes[i], stack_array_memsize(sizes[i]), stack_list_memsize(sizes[i]));
 }
 
 
 void time_profile()
 {
+	printf("\n%50s\n\n", "array/list time profile");
+
     size_t sizes[] = { 1, 2, 3, 5, 10, 50, 100, 1000, 10000 };
     size_t n_sizes = sizeof(sizes) / sizeof(sizes[0]);
 
-	printf("|%15s|%31s|%31s|\n", "", "push", "pop");
-	printf("|%15s|%15s|%15s|%15s|%15s|\n", "size", "stack", "list", "stack", "list");
+	printf("|%13s|%27s|%27s|\n", "", "push", "pop");
+	printf("|%13s|%13s|%13s|%13s|%13s|\n", "size", "array", "list", "array", "list");
 
-	stack_t *stack = stack_new(sizes[n_sizes - 1]);
-	list_t *list = list_new();
+	stack_array_t *stack_array = stack_array_new(sizes[n_sizes - 1]);
+	stack_list_t *stack_list = stack_list_new();
 
 	for (size_t i_size = 0; i_size < n_sizes; i_size++)
 	{
-		time_t beg, end;
-		time_t stack_push_time = 0, list_push_time = 0, stack_pop_time = 0, list_pop_time = 0;
+		clock_t start, end;
+		double stack_array_push_time = 0, stack_list_push_time = 0, stack_array_pop_time = 0, stack_list_pop_time = 0;
         for (short j = 0; j < TIMES; j++)
 		{
-			beg = milliseconds_now();
+			start = clock();
 			for (size_t elems_count = 0; elems_count < sizes[i_size]; ++elems_count)
-				stack_push(stack, 'q');
-			end = milliseconds_now();
-			stack_push_time += end - beg;
+				stack_array_push(stack_array, 'q');
+			end = clock();
+			stack_array_push_time += end - start;
 
-			beg = milliseconds_now();
+			start = clock();
 			for (size_t elems_count = 0; elems_count < sizes[i_size]; ++elems_count)
-				list_push(list, 'q');
-			end = milliseconds_now();
-			list_push_time += end - beg;
+				stack_list_push(stack_list, 'q');
+			end = clock();
+			stack_list_push_time += (double)(end - start);
 
-			beg = milliseconds_now();
+			start = clock();
 			for (size_t elems_count = 0; elems_count < sizes[i_size]; ++elems_count)
-				stack_pop(stack);
-			end = milliseconds_now();
-			stack_pop_time += end - beg;
+				stack_array_pop(stack_array);
+			end = clock();
+			stack_array_pop_time += end - start;
 
-			beg = milliseconds_now();
+			start = clock();
 			for (size_t elems_count = 0; elems_count < sizes[i_size]; ++elems_count)
-				list_pop(list);
-			end = milliseconds_now();
-			list_pop_time += end - beg;
+				stack_list_pop(stack_list);
+			end = clock();
+			stack_list_pop_time += end - start;
 		}
 
-		printf("|%15ld|%15ld|%15ld|%15ld|%15ld|\n", 
-			sizes[i_size], stack_push_time / TIMES,  list_push_time / TIMES, stack_pop_time / TIMES,  list_pop_time / TIMES);
+		printf("|%13ld|%13.3f|%13.3f|%13.3f|%13.3f|\n", 
+			sizes[i_size], stack_array_push_time / TIMES,  stack_list_push_time / TIMES, stack_array_pop_time / TIMES,  stack_list_pop_time / TIMES);
     }
 
-	list_delete(list);
-	stack_delete(stack);
+	stack_list_delete(stack_list);
+	stack_array_delete(stack_array);
 }
 	
-
-time_t milliseconds_now(void)
+/*
+time_t clock(void)
 {
     struct timeval val;
 
@@ -80,3 +81,4 @@ time_t milliseconds_now(void)
 
     return (time_t)val.tv_sec * 1000000LL + (time_t)val.tv_usec;
 }
+*/
